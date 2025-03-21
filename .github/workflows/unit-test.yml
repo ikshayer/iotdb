@@ -9,6 +9,7 @@ on:
       - master
       - 'rel/*'
       - "rc/*"
+      - 'force_ci/**'
     paths-ignore:
       - 'docs/**'
       - 'site/**'
@@ -31,7 +32,7 @@ concurrency:
 env:
   MAVEN_OPTS: -Xms2g -Xmx4g -Dhttp.keepAlive=false -Dmaven.wagon.http.pool=false -Dmaven.wagon.http.retryHandler.class=standard -Dmaven.wagon.http.retryHandler.count=3
   MAVEN_ARGS: --batch-mode --no-transfer-progress
-  DEVELOCITY_ACCESS_KEY: ${{ secrets.DEVELOCITY_ACCESS_KEY }}
+  DEVELOCITY_ACCESS_KEY: ${{ secrets.GE_ACCESS_TOKEN }}
 
 jobs:
   unit-test:
@@ -40,7 +41,7 @@ jobs:
       max-parallel: 15
       matrix:
         java: [ 17 ]
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
         it_task: [ 'others', 'datanode' ]
     runs-on: ${{ matrix.os }}
 
